@@ -14,6 +14,7 @@ int gcd(int a, int b) {
     return a;
 }
 int main() {
+    // a and b being declared
     int a, b;
     cout << "Enter the first number: ";
     cin >> a;
