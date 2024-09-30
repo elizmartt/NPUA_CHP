@@ -1,0 +1,6 @@
+﻿  CHP_ceaser.cpp
+C:\Users\User\source\repos\CHP_ceaser\CHP_ceaser\CHP_ceaser.cpp(26,27): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\User\source\repos\CHP_ceaser\CHP_ceaser\CHP_ceaser.cpp(32,27): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\User\source\repos\CHP_ceaser\CHP_ceaser\CHP_ceaser.cpp(44,27): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\User\source\repos\CHP_ceaser\CHP_ceaser\CHP_ceaser.cpp(50,27): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  CHP_ceaser.vcxproj -> C:\Users\User\source\repos\CHP_ceaser\x64\Debug\CHP_ceaser.exe
