@@ -1,6 +1,5 @@
-#include <stddef.h>
-#include <cstring>
 #include <iostream>
+#include <cstring>
 #include <algorithm>
 
 const unsigned int TemplateSize = 256;
@@ -29,7 +28,6 @@ private:
 };
 
 // Implementation of Shablon class methods
-
 Shablon::Shablon() : mArrSize(0) {
     std::memset(mEncryptTable, 0, sizeof(mEncryptTable));
     std::memset(mDecryptTable, 0, sizeof(mDecryptTable));
@@ -85,10 +83,21 @@ int main() {
     unsigned char encodeArr[TemplateSize];
     unsigned char decodeArr[TemplateSize];
 
-    // Initialize encoding and decoding arrays
+    // Prompt user for key
+    int key;
+    std::cout << "Enter a key (0-" << TemplateSize - 1 << "): ";
+    std::cin >> key;
+
+    // Validate key
+    if (key < 0 || key >= TemplateSize) {
+        std::cerr << "Invalid key!" << std::endl;
+        return -1;
+    }
+
+    // Initialize encoding and decoding arrays based on the key
     for (unsigned int i = 0; i < TemplateSize; ++i) {
-        encodeArr[i] = (i + 1) % TemplateSize;  // Simple shift encoding
-        decodeArr[i] = (i - 1 + TemplateSize) % TemplateSize; // Simple shift decoding
+        encodeArr[i] = (i + key) % TemplateSize;  // Shift by the key
+        decodeArr[i] = (i - key + TemplateSize) % TemplateSize; // Reverse shift by the key
     }
 
     // Set the template tables
@@ -119,8 +128,14 @@ int main() {
     decryptedText[srcSize] = '\0'; // Null terminate the decrypted string
     std::cout << "Decrypted text: " << decryptedText << std::endl;
     std::cout << "Encrypted text: ";
+    
     for (unsigned int i = 0; i < encSize; ++i) {
-        std::cout << static_cast<int>(encryptedText[i]) << " "; // Print as integers for clarity
+        // Ensure we only print valid ASCII characters
+        if (encryptedText[i] >= 32 && encryptedText[i] < 127) {
+            std::cout << encryptedText[i]; // Print as ASCII characters
+        } else {
+            std::cout << '.'; // Non-printable characters represented as '.'
+        }
     }
     std::cout << std::endl;
 
