@@ -6,8 +6,8 @@ class TextCipher {
 public:
     TextCipher(const std::string& text, int rows)
         : text(text), n(rows) {
-        m = (text.size() + n - 1) / n;  // Calculate number of columns
-        array.resize(m, std::vector<char>(n, ' ')); // Initialize the matrix
+        m = (text.size() + n - 1) / n;  
+        array.resize(m, std::vector<char>(n, ' ')); 
     }
 
     void encrypt() {
