@@ -4,7 +4,7 @@
 #include <sstream>
 #include <limits>
 
-std::string encodeRLE(const std::vector<int>& input) {
+std::string encodeRLE(const std::string& input) {
     std::string encoded = "";
     int n = input.size();
 
@@ -15,7 +15,7 @@ std::string encodeRLE(const std::vector<int>& input) {
             ++count;
         }
 
-        encoded += std::to_string(input[i]);
+        encoded += input[i];
         encoded += 'x';
         encoded += std::to_string(count);
         encoded += " ";
@@ -24,18 +24,18 @@ std::string encodeRLE(const std::vector<int>& input) {
     return encoded;
 }
 
-std::vector<int> decodeRLE(const std::string& encoded) {
-    std::vector<int> decoded;
+std::string decodeRLE(const std::string& encoded) {
+    std::string decoded = "";
     std::stringstream ss(encoded);
     std::string part;
 
     while (ss >> part) {
         std::size_t xPos = part.find('x');
-        int value = std::stoi(part.substr(0, xPos));
+        char value = part.substr(0, xPos)[0]; // Get the character
         int count = std::stoi(part.substr(xPos + 1));
 
         for (int i = 0; i < count; ++i) {
-            decoded.push_back(value);
+            decoded += value; // Append the character count times
         }
     }
 
@@ -51,9 +51,9 @@ void displayMenu() {
 
 int main() {
     int choice;
-    std::vector<int> input;
+    std::string input;
     std::string encodedString;
-    std::vector<int> decodedData;
+    std::string decodedData;
 
     do {
         displayMenu();
@@ -62,16 +62,9 @@ int main() {
 
         switch (choice) {
         case 1: {
-            input.clear();
-            int value;
-            std::cout << "Input integers: ";
-
-            while (std::cin >> value) {
-                input.push_back(value);
-            }
-
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Input string: ";
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear the newline
+            std::getline(std::cin, input); 
 
             encodedString = encodeRLE(input);
             std::cout << "Encoded RLE: " << encodedString << std::endl;
@@ -79,15 +72,11 @@ int main() {
         }
         case 2: {
             std::cout << "Input encoded RLE string: ";
-            std::cin.clear();
-            std::getline(std::cin >> std::ws, encodedString);
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear the newline
+            std::getline(std::cin, encodedString);
 
             decodedData = decodeRLE(encodedString);
-            std::cout << "Decoded RLE: ";
-            for (int val : decodedData) {
-                std::cout << val << " ";
-            }
-            std::cout << std::endl;
+            std::cout << "Decoded RLE: " << decodedData << std::endl;
             break;
         }
         case 3:
