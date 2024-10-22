@@ -24,8 +24,8 @@ public:
 
 private:
     std::string text;
-    int n; // Number of rows
-    int m; // Number of columns
+    int n; 
+    int m; 
     std::vector<std::vector<char>> array;
 
     void fillMatrixForEncryption() {
