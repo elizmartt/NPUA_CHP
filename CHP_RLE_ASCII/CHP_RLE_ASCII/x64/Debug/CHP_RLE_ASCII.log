@@ -1,3 +1,2 @@
 ﻿  CHP_RLE_ASCII.cpp
-C:\Users\User\source\repos\CHP_RLE_ASCII\CHP_RLE_ASCII\CHP_RLE_ASCII.cpp(9,11): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   CHP_RLE_ASCII.vcxproj -> C:\Users\User\source\repos\CHP_RLE_ASCII\x64\Debug\CHP_RLE_ASCII.exe

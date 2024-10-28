@@ -1,87 +1,63 @@
 #include <iostream>
-#include <vector>
 #include <string>
 #include <sstream>
-#include <limits>
 
-std::string encodeRLE(const std::string& input) {
-    std::string encoded = "";
-    int n = input.size();
+class RLE {
+public:
+    std::string compress(const std::string& input);
+    std::string decompress(const std::string& input);
+};
 
-    for (int i = 0; i < n; ++i) {
-        int count = 1;
-        while (i < n - 1 && input[i] == input[i + 1]) {
-            ++i;
+std::string RLE::compress(const std::string& input) {
+    std::stringstream result;
+    int count = 1;
+
+    for (size_t i = 1; i <= input.size(); ++i) {
+        if (i < input.size() && input[i] == input[i - 1]) {
             ++count;
         }
-
-        encoded += input[i];
-        encoded += static_cast<char>(count);
-    }
-
-    return encoded;
-}
-
-std::string decodeRLE(const std::string& encoded) {
-    std::string decoded = "";
-
-    for (size_t i = 0; i < encoded.length(); i += 2) {
-        char value = encoded[i];
-        int count = static_cast<unsigned char>(encoded[i + 1]);
-
-        for (int j = 0; j < count; ++j) {
-            decoded += value;
+        else {
+            result << input[i - 1];
+            result << (char)count; // Store count as char
+            count = 1;
         }
     }
 
-    return decoded;
+    return result.str();
 }
 
-void displayMenu() {
-    std::cout << "Choose an option:\n";
-    std::cout << "1. Encrypt\n";
-    std::cout << "2. Decrypt\n";
-    std::cout << "3. Exit\n";
+std::string RLE::decompress(const std::string& input) {
+    std::stringstream result;
+
+    for (size_t i = 0; i < input.size(); i += 2) {
+        char ch = input[i];
+        int count = (char)input[i + 1]; // Convert char to int
+
+        result << std::string(count, ch);
+    }
+
+    return result.str();
 }
 
 int main() {
-    int choice;
+    RLE rle;
     std::string input;
-    std::string encodedString;
-    std::string decodedData;
 
-    do {
-        displayMenu();
-        std::cout << "Enter your choice: ";
-        std::cin >> choice;
+    std::cout << "Enter text to compress: ";
+    std::getline(std::cin, input);
 
-        switch (choice) {
-        case 1: {
-            std::cout << "Input string: ";
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::getline(std::cin, input);
+    std::string compressed = rle.compress(input);
+    std::cout << "Compressed text: " << compressed << std::endl;
 
-            encodedString = encodeRLE(input);
-            std::cout << "Encoded RLE: " << encodedString << std::endl;
-            break;
-        }
-        case 2: {
-            std::cout << "Input encoded RLE string: ";
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::getline(std::cin, encodedString);
+    std::string decompressed = rle.decompress(compressed);
+    std::cout << "Decompressed text: " << decompressed << std::endl;
 
-            decodedData = decodeRLE(encodedString);
-            std::cout << "Decoded RLE: " << decodedData << std::endl;
-            break;
-        }
-        case 3:
-            std::cout << "Exiting the program." << std::endl;
-            break;
-        default:
-            std::cout << "Invalid choice" << std::endl;
-            break;
-        }
-    } while (choice != 3);
+    if (input == decompressed) {
+        std::cout << "Success: Original and decompressed texts match!" << std::endl;
+    }
+    else {
+        std::cout << "Error: Original and decompressed texts do not match!" << std::endl;
+    }
 
     return 0;
 }
