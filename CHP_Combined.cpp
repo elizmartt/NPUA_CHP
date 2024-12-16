@@ -87,7 +87,7 @@ int main() {
     cin >> choice;
 
     if (choice == 1) {
-        //  Caesar -> Matrix
+        
         string caesarEncrypted = caesarCipher(text, caesarKey, true);
         cout << "After Caesar Cipher Encryption: " << caesarEncrypted << endl;
 
@@ -95,7 +95,7 @@ int main() {
         cout << "Final Encrypted Text (Matrix): " << matrixEncrypted << endl;
     }
     else if (choice == 2) {
-        //  Matrix -> Caesar
+       
         string matrixDecrypted = matrixCipher(text, matrixKey, false);
         cout << "After Matrix Cipher Decryption: " << matrixDecrypted << endl;
 
